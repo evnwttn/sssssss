@@ -1,7 +1,13 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 
 app = FastAPI()
+
+
+class Button(BaseModel):
+    button: str
+
 
 origins = [
     "http://localhost:3000",
@@ -18,7 +24,7 @@ app.add_middleware(
 
 
 @app.put("/")
-async def read_root():
-    return {"data": "hello!!"}
+async def increment(button: Button):
+    return {"data": button}
 
 # uvicorn main:app --reload
